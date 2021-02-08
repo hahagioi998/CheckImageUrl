@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdbc.ciu.mapper.CheckImageMapper">
+
+    <select id="getUrlByTable" resultType="com.wdbc.ciu.model.Res">
+        select ${tempId} id,${table.columnName} url from ${table.tableName} where ${table.columnName} like 'http://%.jpg' or ${table.columnName} like 'http://%.png' or ${table.columnName} like 'https://%.gif' or ${table.columnName} like 'https://%.jpg'  or ${table.columnName} like 'https://%.png'  or ${table.columnName} like 'https://%.gif'
+    </select>
+
+    <select id="getPrimaryByTableName" resultType="String">
+        SELECT column_name FROM INFORMATION_SCHEMA.`KEY_COLUMN_USAGE` WHERE table_name= #{tableName} AND constraint_name='PRIMARY' limit 1
+    </select>
+
+
+    <select id="getListTable" resultType="com.wdbc.ciu.model.Table">
+         SELECT table_name tableName,column_name columnName FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = #{dataBase}
+    </select>
+
+    <select id="getListDataBase" resultType="String">
+        SELECT `SCHEMA_NAME` FROM `information_schema`.`SCHEMATA`
+    </select>
+</mapper>
